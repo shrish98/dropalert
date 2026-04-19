@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { signOut } from "@/app/actions";
-import AuthModal from "./AuthModal";
+import AuthModal from "@/components/AuthModal";
 import { Button } from "@/components/ui/button";
 import { LogIn, LogOut } from "lucide-react";
 

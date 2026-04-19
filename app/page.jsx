@@ -6,6 +6,7 @@ import { Bell } from "lucide-react";
 import { TrendingDown } from "lucide-react";
 import AddProductForm from "@/components/ui/AddProductForm";
 import ProductCard from "@/components/ui/ProductCard";
+import AuthButton from "@/components/ui/AuthButton";
 
 
 
@@ -52,10 +53,7 @@ export default async function Home() {
             />
           </div>
 
-          <button className="flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white px-3 py-1.5 text-sm rounded-md font-medium transition-colors">
-            <LogIn size={16} />
-            Sign In
-          </button>
+          <AuthButton user={user} />
         </div>
       </header>
 
