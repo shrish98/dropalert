@@ -7,13 +7,21 @@ import { TrendingDown } from "lucide-react";
 import AddProductForm from "@/components/ui/AddProductForm";
 import ProductCard from "@/components/ui/ProductCard";
 import AuthButton from "@/components/ui/AuthButton";
+import { createClient } from "@/app/utils/supabase/server";
+import { getProducts } from "@/app/actions";
 
 
 
 export default async function Home() {
   // Placeholder variables so the UI can render without crashing
-  const user = null;
-  const products = [];
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const products = user ? await getProducts() : [];
+
+
 
   const FEATURES = [
     {
