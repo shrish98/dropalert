@@ -63,7 +63,7 @@ npm install
 npm run dev
 ```
 
-3. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application!
+3. Open [https://dropalert-app.netlify.app/) with your browser to see the application!
 
 ---
 
