@@ -100,7 +100,7 @@ export default function PriceChart({ productId }) {
                             tickMargin={10}
                         />
                         <YAxis 
-                            domain={['dataMin - (dataMin * 0.05)', 'dataMax + (dataMax * 0.05)']} 
+                            domain={([dataMin, dataMax]) => [dataMin * 0.95, dataMax * 1.05]} 
                             tick={{ fontSize: 11, fill: textColor }} 
                             stroke="transparent"
                             tickMargin={10}
