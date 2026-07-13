@@ -8,9 +8,18 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
+      - REDIS_URL=redis://redis:6379
       # Add your environment variables here or use an env_file
       # - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
       # - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
     # env_file:
     #   - .env.local
+    restart: always
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:alpine
+    ports:
+      - "6379:6379"
     restart: always
