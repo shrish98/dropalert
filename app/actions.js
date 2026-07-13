@@ -2,6 +2,7 @@
 
 import { createClient } from "@/app/utils/supabase/server";
 import { scrapeProduct } from "@/lib/firecrawl";
+import redis from "@/lib/redis";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -20,6 +21,19 @@ export async function addProduct(formData) {
 
     if (!user) {
       return { error: "Not authenticated" };
+    }
+
+    // Rate Limiting Check
+    const rateLimitKey = `rate_limit:add_product:${user.id}`;
+    const requests = await redis.incr(rateLimitKey);
+    
+    if (requests === 1) {
+      // Set expiration to 1 hour (3600 seconds) on the first request
+      await redis.expire(rateLimitKey, 3600);
+    }
+    
+    if (requests > 5) {
+      return { error: "Rate limit exceeded. You can only track 5 products per hour." };
     }
 
     // Scrape product data with Firecrawl
