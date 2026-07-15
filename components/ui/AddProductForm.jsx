@@ -26,16 +26,20 @@ export default function AddProductForm({ user }) {
         const formData = new FormData();
         formData.append("url", url);
 
-        const result = await addProduct(formData);
+        try {
+            const result = await addProduct(formData);
 
-        if (result.error) {
-            toast.error(result.error);
-        } else {
-            toast.success(result.message || "Product tracked successfully!");
-            setUrl("");
+            if (result?.error) {
+                toast.error(result.error);
+            } else {
+                toast.success(result?.message || "Product tracked successfully!");
+                setUrl("");
+            }
+        } catch (err) {
+            toast.error(err.message || "The server took too long to respond. Please try again.");
+        } finally {
+            setLoading(false);
         }
-
-        setLoading(false);
     };
 
     return (

@@ -23,17 +23,20 @@ export async function addProduct(formData) {
       return { error: "Not authenticated" };
     }
 
-    // Rate Limiting Check
-    const rateLimitKey = `rate_limit:add_product:${user.id}`;
-    const requests = await redis.incr(rateLimitKey);
-    
-    if (requests === 1) {
-      // Set expiration to 1 hour (3600 seconds) on the first request
-      await redis.expire(rateLimitKey, 3600);
-    }
-    
-    if (requests > 5) {
-      return { error: "Rate limit exceeded. You can only track 5 products per hour." };
+    // Rate Limiting Check (Fail Gracefully if Redis is down)
+    try {
+      const rateLimitKey = `rate_limit:add_product:${user.id}`;
+      const requests = await redis.incr(rateLimitKey);
+      
+      if (requests === 1) {
+        await redis.expire(rateLimitKey, 3600);
+      }
+      
+      if (requests > 5) {
+        return { error: "Rate limit exceeded. You can only track 5 products per hour." };
+      }
+    } catch (redisError) {
+      console.warn("Redis rate limit check failed, bypassing:", redisError.message);
     }
 
     // Scrape product data with Firecrawl
