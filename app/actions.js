@@ -1,5 +1,6 @@
 "use server";
 
+export const maxDuration = 60; // Allow function to run for up to 60 seconds (Vercel max)
 import { createClient } from "@/app/utils/supabase/server";
 import { scrapeProduct } from "@/lib/firecrawl";
 import redis from "@/lib/redis";
