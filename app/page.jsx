@@ -5,6 +5,8 @@ import { Shield } from "lucide-react";
 import { Bell } from "lucide-react";
 import { TrendingDown } from "lucide-react";
 import AddProductForm from "@/components/ui/AddProductForm";
+export const maxDuration = 60;
+
 import ProductCard from "@/components/ui/ProductCard";
 import AuthButton from "@/components/ui/AuthButton";
 import { createClient } from "@/app/utils/supabase/server";
