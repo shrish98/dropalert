@@ -1,6 +1,6 @@
 # 📉 DropAlert
 
-**Live Demo:** [https://dropalert-app.netlify.app/](https://dropalert-app.netlify.app/)
+**Live Demo:** [https://dropalert-lemon.vercel.app/](https://dropalert-lemon.vercel.app/)
 
 DropAlert is a beautiful, intelligent automated price-tracking application built to save you money. Paste the URL of any product from any e-commerce site, and DropAlert's extraction engine will monitor the daily market value, keeping you informed via automated email notifications the exact moment the price drops.
 
@@ -19,18 +19,18 @@ DropAlert is a beautiful, intelligent automated price-tracking application built
 - **Styling:** [Tailwind CSS v4](https://tailwindcss.com/) & Glassmorphism
 - **Animations:** [Framer Motion](https://www.framer.com/motion/)
 - **Database & Auth:** [Supabase](https://supabase.com/) (PostgreSQL & Next.js SSR Auth)
+- **Caching & Rate Limiting:** [Redis](https://redis.io/) (via Upstash for production, Docker for local)
 - **Extraction Engine:** [Firecrawl API v4](https://firecrawl.dev/)
 - **Email Dispatch:** [Resend](https://resend.com/)
 - **Charts:** [Recharts](https://recharts.org/)
-- **Hosting:** [Netlify](https://www.netlify.com/)
+- **Hosting:** [Vercel](https://vercel.com/)
 
 ---
 
 ## 🚀 Local Development
 
 ### Prerequisites
-You will need Node.js installed on your machine and accounts configured for Supabase, Resend, and Firecrawl.
-
+You will need Node.js and Docker installed on your machine, along with accounts configured for Supabase, Resend, and Firecrawl.
 ### Environment Setup
 Create a `.env` file in the root of the project with your API keys:
 
@@ -49,6 +49,9 @@ CRON_SECRET=your_custom_secure_cron_secret
 # Resend
 RESEND_API_KEY=your_resend_api_key
 RESEND_FROM_EMAIL=onboarding@resend.dev
+
+# Redis (For local development, uses Docker)
+REDIS_URL=redis://localhost:6379
 ```
 
 ### Installation
@@ -58,18 +61,23 @@ RESEND_FROM_EMAIL=onboarding@resend.dev
 npm install
 ```
 
-2. Run the development server:
+2. Start the local Redis container via Docker (Required for caching and rate-limiting):
+```bash
+docker-compose up -d
+```
+
+3. Run the Next.js development server:
 ```bash
 npm run dev
 ```
 
-3. Open [https://dropalert-app.netlify.app/) with your browser to see the application!
+4. Open [http://localhost:3000](http://localhost:3000) with your browser to see the application!
 
 ---
 
 ## ⏰ Background Cron configuration
 
-To enable the automated price checking module in production, trigger a `POST` request to `/api/cron/check-prices` containing an `Authorization` header mapping to your environmental `CRON_SECRET`. In Netlify, this can be automated via Scheduled Functions or any external ping service (like cron-job.org).
+To enable the automated price checking module in production, trigger a `POST` request to `/api/cron/check-prices` containing an `Authorization` header mapping to your environmental `CRON_SECRET`. In Vercel, this can be automated via Vercel Cron Jobs.
 
 ```json
 Authorization: Bearer <your-secure-cron-secret>
