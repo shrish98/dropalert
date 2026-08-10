@@ -59,10 +59,11 @@ export default async function Home() {
           <div className="flex items-center gap-3">
             <Image
               src="/dropalert.png"
-              alt="Drop Alert Logo"
+              alt="DropAlert Logo"
               width={600}
               height={200}
-              className="h-10 w-auto drop-shadow-sm"
+              priority
+              className="h-10 w-auto rounded-lg drop-shadow-md hover:scale-105 transition-transform duration-300 object-contain"
             />
           </div>
 
