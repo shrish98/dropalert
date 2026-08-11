@@ -60,10 +60,10 @@ export default async function Home() {
             <Image
               src="/dropalert.png"
               alt="DropAlert Logo"
-              width={600}
-              height={200}
+              width={816}
+              height={323}
               priority
-              className="h-10 w-auto rounded-lg drop-shadow-md hover:scale-105 transition-transform duration-300 object-contain"
+              className="h-10 sm:h-11 w-auto rounded-xl drop-shadow-sm hover:scale-105 transition-transform duration-300 object-contain"
             />
           </div>
 
